@@ -72,8 +72,9 @@ library — all works, with local SQLite persistence.
 - App icons are a generated placeholder — run `npm run icons` with your own
   source image before a release build.
 - The macOS `.dmg` is only ad-hoc signed (no Apple Developer ID, not notarized).
-  On first launch, right-click Prowtein in Applications → Open to get past
-  Gatekeeper; Developer-ID signing + notarization are planned.
+  On first launch, allow it via System Settings → Privacy & Security →
+  "Open Anyway" (Control-click → Open no longer bypasses Gatekeeper on
+  macOS 15+); Developer-ID signing + notarization are planned.
 
 [Unreleased]: https://github.com/eraycevikbusiness/Prowtein/compare/desktop-v0.1.0...HEAD
 [0.1.0]: https://github.com/eraycevikbusiness/Prowtein/releases/tag/desktop-v0.1.0

@@ -96,9 +96,9 @@ export const RELEASES: Release[] = [
             tr: "Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion ile geliştirildi. MIT lisanslı.",
           },
           {
-            en: "The macOS build isn't notarized yet — on first launch, right-click Prowtein → Open to get past Gatekeeper. A Linux build is planned for a future release.",
-            de: "Der macOS-Build ist noch nicht notarisiert — beim ersten Start Rechtsklick auf Prowtein → Öffnen, um an Gatekeeper vorbeizukommen. Ein Linux-Build ist für eine zukünftige Version geplant.",
-            tr: "macOS yapısı henüz noterlenmedi — ilk açılışta Gatekeeper'ı geçmek için Prowtein'a sağ tıkla → Aç. Linux yapısı gelecek bir sürüm için planlanmaktadır.",
+            en: "The macOS build isn't notarized yet — on first launch, allow it via System Settings → Privacy & Security → “Open Anyway”. A Linux build is planned for a future release.",
+            de: "Der macOS-Build ist noch nicht notarisiert — beim ersten Start über Systemeinstellungen → Datenschutz & Sicherheit → „Trotzdem öffnen“ erlauben. Ein Linux-Build ist für eine zukünftige Version geplant.",
+            tr: "macOS yapısı henüz noterlenmedi — ilk açılışta Sistem Ayarları → Gizlilik ve Güvenlik → “Yine de Aç” ile izin ver. Linux yapısı gelecek bir sürüm için planlanmaktadır.",
           },
         ],
       },

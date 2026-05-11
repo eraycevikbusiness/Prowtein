@@ -19,5 +19,5 @@ First public release.
 
 ### Notes
 - Built with Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion. MIT-licensed.
-- The macOS build isn't notarized yet — on first launch, right-click Prowtein → Open to get past Gatekeeper.
+- The macOS build isn't notarized yet — on first launch, allow it via System Settings → Privacy & Security → "Open Anyway".
 - A Linux build is planned for a future release.

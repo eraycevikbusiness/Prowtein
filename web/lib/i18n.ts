@@ -136,8 +136,8 @@ export const TRANSLATIONS = {
       mac: {
         step1title: "Open the disk image",
         step1body: "Open the downloaded .dmg and drag Prowtein into your Applications folder.",
-        step2title: "Launch Prowtein",
-        step2body: "First launch: right-click Prowtein in Applications → Open, then confirm. This build isn't notarized yet, so Gatekeeper asks once — after that it opens normally and sets up your local database.",
+        step2title: "Allow it the first time",
+        step2body: "macOS will say it can't verify the app — this build isn't notarized yet. Open System Settings → Privacy & Security, scroll to the bottom, click “Open Anyway” next to Prowtein and confirm. From then on it opens normally and sets up your local database.",
         step3title: "Log your first meal",
         step3body: "Press ⌘K, type three letters, hit return. That's the whole flow.",
       },
@@ -314,8 +314,8 @@ export const TRANSLATIONS = {
       mac: {
         step1title: "Disk-Image öffnen",
         step1body: "Öffne die heruntergeladene .dmg-Datei und zieh Prowtein in deinen Programme-Ordner.",
-        step2title: "Prowtein starten",
-        step2body: "Beim ersten Start: Rechtsklick auf Prowtein → Öffnen, dann bestätigen. Dieser Build ist noch nicht notarisiert, also fragt Gatekeeper einmal nach — danach öffnet sich die App ganz normal und legt die lokale Datenbank an.",
+        step2title: "Beim ersten Mal erlauben",
+        step2body: "macOS meldet, dass es die App nicht überprüfen kann — dieser Build ist noch nicht notarisiert. Öffne Systemeinstellungen → Datenschutz & Sicherheit, scroll ganz nach unten, klick neben Prowtein auf „Trotzdem öffnen“ und bestätige. Ab dann öffnet sie sich normal und legt die lokale Datenbank an.",
         step3title: "Erste Mahlzeit eintragen",
         step3body: "Drücke ⌘K, tippe drei Buchstaben, Enter. Das ist der ganze Flow.",
       },
@@ -492,8 +492,8 @@ export const TRANSLATIONS = {
       mac: {
         step1title: "Disk görüntüsünü aç",
         step1body: "İndirilen .dmg dosyasını aç ve Prowtein'ı Uygulamalar klasörüne sürükle.",
-        step2title: "Prowtein'ı başlat",
-        step2body: "İlk açılışta: Prowtein'a sağ tıkla → Aç, sonra onayla. Bu derleme henüz noterlenmedi, yani Gatekeeper bir kez sorar — sonrasında uygulama normal şekilde açılır ve yerel veritabanını kurar.",
+        step2title: "İlk seferinde izin ver",
+        step2body: "macOS uygulamayı doğrulayamadığını söyleyecek — bu derleme henüz noterlenmedi. Sistem Ayarları → Gizlilik ve Güvenlik'i aç, en alta in, Prowtein'ın yanındaki “Yine de Aç”a tıkla ve onayla. Bundan sonra normal şekilde açılır ve yerel veritabanını kurar.",
         step3title: "İlk öğünü kaydet",
         step3body: "⌘K'ya bas, üç harf yaz, Enter'a bas. Akış bu kadar.",
       },
