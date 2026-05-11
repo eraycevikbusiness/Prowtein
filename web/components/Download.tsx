@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Apple, MonitorDown, ArrowDownToLine } from "lucide-react";
+import { Apple, MonitorDown, Terminal, ArrowDownToLine } from "lucide-react";
 import { useLang } from "@/lib/LangContext";
 import SectionHead from "./ui/SectionHead";
 
@@ -108,7 +108,7 @@ export default function Download() {
             sub={t.download.sub}
             align="center"
           />
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-4">
             <DownloadCard
               Icon={MonitorDown}
               os="Windows"
@@ -121,6 +121,13 @@ export default function Download() {
               os="macOS"
               file={t.download.macFile}
               btnLabel={t.download.btnMac}
+              disabled
+            />
+            <DownloadCard
+              Icon={Terminal}
+              os="Linux"
+              file={t.download.linuxFile}
+              btnLabel={t.download.btnLinux}
               disabled
             />
           </div>
