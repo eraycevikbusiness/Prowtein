@@ -1,143 +1,105 @@
+import type { Lang } from "./i18n";
+
 export type ChangeKind = "new" | "added" | "changed" | "fixed" | "notes";
 export type ReleaseStatus = "latest" | "pre" | "unreleased";
 
 export interface ChangeGroup {
   kind: ChangeKind;
-  items: string[];
+  items: Record<Lang, string>[];
 }
 
 export interface Release {
-  /** Either a semver string like "0.1.0", or the literal "unreleased". */
   version: string;
-  /** Locale-neutral human date, e.g. "May 2026". */
   date: string;
   status: ReleaseStatus;
-  /** Short English summary line. */
-  title: string;
+  title: Record<Lang, string>;
   groups: ChangeGroup[];
 }
 
-/**
- * Hand-written changelog. Entry bodies stay in English (the way GitHub releases
- * read); the surrounding page chrome is translated via `t.changelog`.
- */
 export const RELEASES: Release[] = [
-  {
-    version: "unreleased",
-    date: "on the workbench",
-    status: "unreleased",
-    title: "What's next",
-    groups: [
-      {
-        kind: "new",
-        items: [
-          "Dark mode — a warm, low-light variant of the whole app.",
-          "Point your data file at any folder, so iCloud Drive / Dropbox / Syncthing gives you sync without a server.",
-          "Signed binaries and opt-in auto-update.",
-          "Save-to-file export (.md / .csv) and a PDF day summary.",
-          "Linux ARM builds (Raspberry Pi, ARM laptops).",
-          "Per-meal notes and an optional photo.",
-        ],
-      },
-      {
-        kind: "changed",
-        items: ["Faster cold start — target is under 200 ms to an interactive window."],
-      },
-    ],
-  },
   {
     version: "0.1.0",
     date: "May 2026",
     status: "latest",
-    title: "First public build",
+    title: {
+      en: "First public release",
+      de: "Erste öffentliche Version",
+      tr: "İlk genel sürüm",
+    },
     groups: [
       {
         kind: "new",
         items: [
-          "⌘K quick-add — type three letters, hit return, logged.",
-          "Food Library — register a food once with its macros and a default serving; log it forever. Most-eaten foods float to the top of ⌘K automatically.",
-          "Daily view — one clean day at a time; step between days, jump to today, click a bar in the week chart.",
-          "Visual progress — protein ring, weekly bar chart, streak counter, daily protein/calorie goals.",
-          "Edit a logged meal — change its servings (with a live macro preview) or remove it.",
-          "Export the selected day to Markdown or CSV (clipboard).",
-          "Local-first storage — a single SQLite file in your OS app-data folder. No account, no cloud, no telemetry.",
-          "Native desktop builds for macOS, Windows and Linux.",
-          "Full UI in English, German and Turkish.",
+          {
+            en: "Today view — protein ring, calorie total, macro split bar (protein / carbs / fat).",
+            de: "Tagesansicht — Protein-Ring, Kaloriensumme, Makro-Balken (Protein / Kohlenhydrate / Fett).",
+            tr: "Günlük görünüm — protein halkası, kalori toplamı, makro çubuğu (protein / karbonhidrat / yağ).",
+          },
+          {
+            en: "Quick-add via Ctrl+K / ⌘K — fuzzy search across your food library, hit Enter to log.",
+            de: "Schnell-Hinzufügen via Strg+K / ⌘K — Fuzzy-Suche in der Bibliothek, Enter zum Eintragen.",
+            tr: "Ctrl+K / ⌘K ile hızlı ekleme — kütüphanede bulanık arama, kaydetmek için Enter.",
+          },
+          {
+            en: "Food Library — save a food once with its macros and a default serving; log it in two keystrokes from then on.",
+            de: "Lebensmittel-Bibliothek — einmal mit Makros und Standardportion anlegen; danach mit zwei Tasten eintragen.",
+            tr: "Yiyecek Kütüphanesi — bir yiyeceği makrolarıyla bir kez kaydet; sonrasında iki tuşla ekle.",
+          },
+          {
+            en: "Day navigation — step backward and forward through days, jump back to today.",
+            de: "Tagesnavigation — vorwärts und rückwärts durch Tage blättern, zum heutigen Tag springen.",
+            tr: "Gün navigasyonu — günler arasında ileri geri geçiş, bugüne dön.",
+          },
+          {
+            en: "Weekly bar chart and streak counter in the sidebar.",
+            de: "Wöchentliches Balkendiagramm und Serien-Zähler in der Seitenleiste.",
+            tr: "Yan panelde haftalık çubuk grafik ve seri sayacı.",
+          },
+          {
+            en: "Edit or remove a logged meal.",
+            de: "Eine eingetragene Mahlzeit bearbeiten oder entfernen.",
+            tr: "Kaydedilen bir öğünü düzenle veya kaldır.",
+          },
+          {
+            en: "Export the current day to Markdown or CSV (copied to clipboard).",
+            de: "Den aktuellen Tag als Markdown oder CSV in die Zwischenablage exportieren.",
+            tr: "Günü Markdown veya CSV olarak panoya kopyala.",
+          },
+          {
+            en: "Settings — set your daily protein and calorie goals; switch language.",
+            de: "Einstellungen — tägliche Protein- und Kalorienziele festlegen; Sprache wechseln.",
+            tr: "Ayarlar — günlük protein ve kalori hedeflerini belirle; dili değiştir.",
+          },
+          {
+            en: "Local-first storage — a single SQLite file in your OS app-data folder. No account, no cloud, no telemetry.",
+            de: "Lokale Datenhaltung — eine SQLite-Datei im App-Daten-Ordner. Kein Konto, keine Cloud, keine Telemetrie.",
+            tr: "Yerel depolama — uygulama klasöründe tek bir SQLite dosyası. Hesap yok, bulut yok, telemetri yok.",
+          },
+          {
+            en: "Windows desktop build via Tauri.",
+            de: "Windows-Desktop-Build via Tauri.",
+            tr: "Tauri üzerinden Windows masaüstü yapısı.",
+          },
+          {
+            en: "Full UI in English, German and Turkish.",
+            de: "Vollständige Benutzeroberfläche auf Englisch, Deutsch und Türkisch.",
+            tr: "Tam arayüz İngilizce, Almanca ve Türkçe olarak.",
+          },
         ],
       },
       {
         kind: "notes",
         items: [
-          "Built with Tauri (a Rust core) + React + TypeScript, Tailwind & shadcn-style components, Framer Motion. MIT-licensed — source on GitHub.",
-          "Single-digit MB per platform. No Electron.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.0.3",
-    date: "April 2026",
-    status: "pre",
-    title: "Beta 3 — charts & speed",
-    groups: [
-      {
-        kind: "added",
-        items: [
-          "Weekly bar chart and streak counter.",
-          "Keyboard navigation for the whole day view (j / k, return, ⌫).",
-        ],
-      },
-      {
-        kind: "changed",
-        items: [
-          "New fuzzy matcher — sub-millisecond search across ~1k foods.",
-          "Most-eaten foods now float to the top of ⌘K automatically.",
-        ],
-      },
-      {
-        kind: "fixed",
-        items: [
-          "Crash when logging a food with an empty serving size.",
-          "Off-by-one in the week-start day on locales where the week starts on Sunday.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.0.2",
-    date: "March 2026",
-    status: "pre",
-    title: "Beta 2 — the Library",
-    groups: [
-      {
-        kind: "added",
-        items: ["Food Library with default servings.", "Edit and delete past entries."],
-      },
-      {
-        kind: "changed",
-        items: ["Moved the data store from a JSON file to SQLite."],
-      },
-      {
-        kind: "fixed",
-        items: [
-          "Decimal-separator handling on German and Turkish locales.",
-          "Window size and position no longer reset on quit.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.0.1",
-    date: "February 2026",
-    status: "pre",
-    title: "First alpha",
-    groups: [
-      {
-        kind: "added",
-        items: [
-          "Day view with manual meal entry.",
-          "Protein ring against a daily goal.",
-          "macOS build only.",
+          {
+            en: "Built with Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion. MIT-licensed.",
+            de: "Entwickelt mit Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion. MIT-lizenziert.",
+            tr: "Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion ile geliştirildi. MIT lisanslı.",
+          },
+          {
+            en: "macOS and Linux builds are planned for a future release.",
+            de: "macOS- und Linux-Builds sind für eine zukünftige Version geplant.",
+            tr: "macOS ve Linux yapıları gelecek bir sürüm için planlanmaktadır.",
+          },
         ],
       },
     ],

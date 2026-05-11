@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import * as db from "./db";
 import { addDays, localTimestamp, todayISO } from "./format";
-import type { Entry, Food, FoodInput, Goals, View } from "./types";
+import type { BodyStats, Entry, Food, FoodInput, Goals, View } from "./types";
 
 interface AppState {
   ready: boolean;
@@ -15,6 +15,9 @@ interface AppState {
   loggedDateSet: Set<string>;
   streak: number;
   commandOpen: boolean;
+  userName: string;
+  showWelcome: boolean;
+  bodyStats: BodyStats | null;
 
   init: () => Promise<void>;
   setView: (v: View) => void;
@@ -35,6 +38,9 @@ interface AppState {
 
   saveGoals: (g: Goals) => Promise<void>;
   setCommandOpen: (open: boolean) => void;
+  setUserName: (name: string) => Promise<void>;
+  dismissWelcome: () => void;
+  setBodyStats: (stats: BodyStats) => Promise<void>;
 }
 
 /** Consecutive days (ending today, or yesterday if today is still empty) with ≥1 entry. */
@@ -66,11 +72,14 @@ export const useApp = create<AppState>((set, get) => ({
   loggedDateSet: new Set(),
   streak: 0,
   commandOpen: false,
+  userName: "",
+  showWelcome: false,
+  bodyStats: null,
 
   init: async () => {
     try {
-      const [foods, goals] = await Promise.all([db.listFoods(), db.getGoals()]);
-      set({ foods, goals });
+      const [foods, goals, name, bodyStats] = await Promise.all([db.listFoods(), db.getGoals(), db.getName(), db.getBodyStats()]);
+      set({ foods, goals, userName: name ?? "", showWelcome: name === null, bodyStats });
       await get().refreshDay();
       await get().refreshMeta();
       set({ ready: true, loadError: null });
@@ -130,4 +139,17 @@ export const useApp = create<AppState>((set, get) => ({
   },
 
   setCommandOpen: (open) => set({ commandOpen: open }),
+
+  setUserName: async (name) => {
+    await db.setName(name);
+    set({ userName: name.trim(), showWelcome: false });
+  },
+  dismissWelcome: () => {
+    void db.setName("");
+    set({ showWelcome: false });
+  },
+  setBodyStats: async (stats) => {
+    await db.setBodyStats(stats);
+    set({ bodyStats: stats });
+  },
 }));

@@ -31,8 +31,8 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": ["icons/icon.png"],
-    "category": "HealthAndFitness",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "category": "Healthcare and Fitness",
     "copyright": "© 2026 Eray Cevik",
     "shortDescription": "A minimal desktop nutrition tracker.",
     "longDescription": "Prowtein is a fast, local-first desktop app for logging daily nutrition. No account, no cloud, no telemetry — just a SQLite file on your machine and a clean interface that gets out of your way."

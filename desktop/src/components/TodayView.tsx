@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { useT } from "@/lib/i18n";
+import { shortcutLabel } from "@/lib/platform";
 import { formatKcal, round1, sumTotals } from "@/lib/format";
 import { Button } from "./ui/button";
 import { MealRow } from "./MealRow";
@@ -79,7 +80,7 @@ export function TodayView() {
             <p className="text-[15px] text-ink-2">{t.today.nothingLogged}</p>
             <p className="text-[13px] text-ink-3 mt-1">
               {t.today.quickAddHintPre && <>{t.today.quickAddHintPre} </>}
-              <span className="chip">⌘K</span>
+              <span className="chip">{shortcutLabel("K")}</span>
               {t.today.quickAddHintPost}
             </p>
             <Button size="sm" className="mt-4" onClick={() => setCommandOpen(true)}>

@@ -1,5 +1,5 @@
 import Database from "@tauri-apps/plugin-sql";
-import type { Entry, Food, FoodInput, Goals } from "./types";
+import type { BodyStats, Entry, Food, FoodInput, Goals } from "./types";
 
 let _db: Database | null = null;
 
@@ -99,6 +99,24 @@ export async function loggedDates(): Promise<string[]> {
   return rows.map((r) => r.date);
 }
 
+// ── Settings (user name) ───────────────────────────────────────────────────
+
+/** Returns null when the key has never been written (first run). */
+export async function getName(): Promise<string | null> {
+  const d = await db();
+  const rows = await d.select<{ value: string }[]>(`SELECT value FROM settings WHERE key='user_name'`);
+  if (rows.length === 0) return null;
+  return rows[0]?.value ?? "";
+}
+
+export async function setName(name: string): Promise<void> {
+  const d = await db();
+  await d.execute(
+    `INSERT INTO settings(key,value) VALUES('user_name',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
+    [name.trim()],
+  );
+}
+
 // ── Settings (goals) ───────────────────────────────────────────────────────
 
 export async function getGoals(): Promise<Goals> {
@@ -121,4 +139,47 @@ export async function setGoals(g: Goals): Promise<void> {
     `INSERT INTO settings(key,value) VALUES('calorie_goal',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
     [String(Math.round(g.calories))],
   );
+}
+
+// ── Settings (body stats) ──────────────────────────────────────────────────
+
+const BODY_KEYS = ["body_weight_kg", "body_height_cm", "body_age", "body_gender", "body_activity", "body_goal"] as const;
+
+export async function getBodyStats(): Promise<BodyStats | null> {
+  const d = await db();
+  const rows = await d.select<{ key: string; value: string }[]>(
+    `SELECT key, value FROM settings WHERE key IN ('body_weight_kg','body_height_cm','body_age','body_gender','body_activity','body_goal')`,
+  );
+  if (rows.length < BODY_KEYS.length) return null;
+  const map = new Map(rows.map((r) => [r.key, r.value]));
+  const w = Number(map.get("body_weight_kg"));
+  const h = Number(map.get("body_height_cm"));
+  const a = Number(map.get("body_age"));
+  if (!w || !h || !a) return null;
+  return {
+    weightKg: w,
+    heightCm: h,
+    age: a,
+    gender: (map.get("body_gender") ?? "male") as BodyStats["gender"],
+    activity: (map.get("body_activity") ?? "moderate") as BodyStats["activity"],
+    goal: (map.get("body_goal") ?? "maintain") as BodyStats["goal"],
+  };
+}
+
+export async function setBodyStats(s: BodyStats): Promise<void> {
+  const d = await db();
+  const pairs: [string, string][] = [
+    ["body_weight_kg", String(s.weightKg)],
+    ["body_height_cm", String(s.heightCm)],
+    ["body_age", String(s.age)],
+    ["body_gender", s.gender],
+    ["body_activity", s.activity],
+    ["body_goal", s.goal],
+  ];
+  for (const [key, value] of pairs) {
+    await d.execute(
+      `INSERT INTO settings(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
+      [key, value],
+    );
+  }
 }

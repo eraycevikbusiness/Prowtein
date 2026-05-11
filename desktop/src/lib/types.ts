@@ -53,3 +53,12 @@ export interface DayTotals {
 }
 
 export type View = "today" | "library";
+
+export interface BodyStats {
+  weightKg: number;
+  heightCm: number;
+  age: number;
+  gender: "male" | "female";
+  activity: "sedentary" | "light" | "moderate" | "active" | "veryActive";
+  goal: "lose" | "maintain" | "gain";
+}

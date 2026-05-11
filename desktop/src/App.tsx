@@ -7,6 +7,7 @@ import { TopBar } from "@/components/TopBar";
 import { TodayView } from "@/components/TodayView";
 import { LibraryView } from "@/components/LibraryView";
 import { QuickAdd } from "@/components/QuickAdd";
+import { WelcomeDialog } from "@/components/WelcomeDialog";
 
 export default function App() {
   const { t } = useT();
@@ -73,6 +74,7 @@ export default function App() {
         </main>
       </div>
       <QuickAdd />
+      <WelcomeDialog />
     </div>
   );
 }

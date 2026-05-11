@@ -7,6 +7,33 @@ import type { View } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { SettingsDialog } from "./SettingsDialog";
 
+function Avatar() {
+  const userName = useApp((s) => s.userName);
+  if (userName) {
+    return (
+      <div className="w-7 h-7 rounded-full bg-coral flex items-center justify-center text-white text-[13px] font-semibold shrink-0 select-none">
+        {userName[0]!.toUpperCase()}
+      </div>
+    );
+  }
+  return (
+    <div className="w-7 h-7 rounded-full bg-[var(--bg-2)] flex items-center justify-center text-ink-3 shrink-0">
+      <Settings size={13} />
+    </div>
+  );
+}
+
+function UserName({ fallback }: { fallback: string }) {
+  const userName = useApp((s) => s.userName);
+  return <>{userName || fallback}</>;
+}
+
+function UserSubtitle({ settingsLabel }: { settingsLabel: string }) {
+  const userName = useApp((s) => s.userName);
+  if (!userName) return null;
+  return <div className="text-[10.5px] text-ink-3">{settingsLabel}</div>;
+}
+
 export function Sidebar() {
   const { t, locale } = useT();
   const view = useApp((s) => s.view);
@@ -121,10 +148,16 @@ export function Sidebar() {
       <div className="mt-auto p-3">
         <button
           onClick={() => setSettingsOpen(true)}
-          className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-ink-2 hover:bg-[var(--surface-2)] hover:text-foreground transition-colors text-[13.5px]"
+          className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[var(--surface-2)] transition-colors group"
         >
-          <Settings size={15} />
-          <span>{t.nav.settings}</span>
+          <Avatar />
+          <div className="flex-1 min-w-0 text-left leading-tight">
+            <div className="text-[13px] font-medium text-foreground truncate">
+              <UserName fallback={t.nav.settings} />
+            </div>
+            <UserSubtitle settingsLabel={t.nav.settings} />
+          </div>
+          <Settings size={13} className="text-ink-3 shrink-0 group-hover:text-ink-2 transition-colors" />
         </button>
       </div>
 

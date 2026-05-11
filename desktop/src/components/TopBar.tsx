@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CalendarDays, ChevronLeft, ChevronRight, Download, Plus, Search } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { relDay, useT } from "@/lib/i18n";
+import { shortcutLabel } from "@/lib/platform";
 import { formatDateFull, todayISO } from "@/lib/format";
 import { Button } from "./ui/button";
 import { ExportDialog } from "./ExportDialog";
@@ -55,7 +56,7 @@ export function TopBar() {
             >
               <Search size={13} />
               <span className="text-[12.5px]">{t.topbar.searchFoods}</span>
-              <span className="chip ml-2">⌘K</span>
+              <span className="chip ml-2">{shortcutLabel("K")}</span>
             </button>
             <Button size="sm" onClick={() => setCommandOpen(true)}>
               <Plus size={14} /> {t.topbar.addMeal}

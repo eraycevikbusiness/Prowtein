@@ -107,7 +107,7 @@ export default function Hero() {
           >
             <ArrowDownToLine size={16} />
             {t.hero.ctaPrimary}
-            <span className="text-[12px] text-white/70 ml-1">v1.0</span>
+            <span className="text-[12px] text-white/70 ml-1">v0.1</span>
           </a>
           <a
             href={GITHUB_URL}
@@ -117,7 +117,6 @@ export default function Hero() {
           >
             <GitBranch size={16} />
             {t.hero.ctaSecondary}
-            <span className="text-[12px] text-[var(--ink-3)]">{t.hero.stars}</span>
           </a>
         </motion.div>
 

@@ -37,7 +37,13 @@
       "Bash(node -e \"const l=require\\('lucide-react'\\); const want=['Apple','Bookmark','CalendarDays','Check','ChevronLeft','ChevronRight','Coffee','Copy','Download','Drumstick','Fish','Flame','Pencil','Plus','Search','Settings','Sparkles','Sun','Trash2','X']; console.log\\('missing:', want.filter\\(k=>!l[k]\\).join\\(','\\) || 'none'\\)\")",
       "Bash(node -e \"console.log\\('cmdk', require\\('cmdk/package.json'\\).version\\); console.log\\('framer-motion', require\\('framer-motion/package.json'\\).version\\); console.log\\('zustand', require\\('zustand/package.json'\\).version\\); console.log\\('@tauri-apps/plugin-sql', require\\('@tauri-apps/plugin-sql/package.json'\\).version\\); console.log\\('@tauri-apps/api', require\\('@tauri-apps/api/package.json'\\).version\\); console.log\\('vite', require\\('vite/package.json'\\).version\\)\")",
       "Bash(node -e \"const fs=require\\('fs'\\);for\\(const p of ['cmdk','framer-motion','zustand','@tauri-apps/plugin-sql','@tauri-apps/api','@tauri-apps/plugin-clipboard-manager','vite','tailwindcss','react']\\) {try{console.log\\(p, JSON.parse\\(fs.readFileSync\\('node_modules/'+p+'/package.json'\\)\\).version\\)}catch\\(e\\){console.log\\(p,'?'\\)}}\")",
-      "Bash(cargo check *)"
+      "Bash(cargo check *)",
+      "PowerShell(rustc --version)",
+      "PowerShell(cargo --version)",
+      "Bash(Get-Content \"C:\\\\Users\\\\erayk\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-erayk-Desktop-Prowtein\\\\8d965387-32d4-4211-869d-992db5f091ef\\\\tasks\\\\b7i1fyxrs.output\" -Wait)",
+      "Bash(Select-String -Pattern \"error|warning|ready|finished|Compiling|Running|VITE|Local:|window\")",
+      "Bash(powershell -Command \"Get-Content 'C:\\\\Users\\\\erayk\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-erayk-Desktop-Prowtein\\\\8d965387-32d4-4211-869d-992db5f091ef\\\\tasks\\\\ba1g7d35z.output' -Wait | Select-String -Pattern 'error|Error|Finished|window|Running DevCommand|Compiling prowtein'\")",
+      "Bash(powershell -Command \"Get-Content 'C:\\\\Users\\\\erayk\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-erayk-Desktop-Prowtein\\\\8d965387-32d4-4211-869d-992db5f091ef\\\\tasks\\\\bihe95xaj.output' -Wait | Select-String -Pattern 'Local:|error|Error'\")"
     ]
   }
 }
