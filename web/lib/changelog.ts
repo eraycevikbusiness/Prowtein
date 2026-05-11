@@ -76,9 +76,9 @@ export const RELEASES: Release[] = [
             tr: "Yerel depolama — uygulama klasöründe tek bir SQLite dosyası. Hesap yok, bulut yok, telemetri yok.",
           },
           {
-            en: "Windows desktop build via Tauri.",
-            de: "Windows-Desktop-Build via Tauri.",
-            tr: "Tauri üzerinden Windows masaüstü yapısı.",
+            en: "Windows and macOS desktop builds via Tauri — the macOS build is a universal binary (Apple Silicon + Intel).",
+            de: "Windows- und macOS-Desktop-Builds via Tauri — der macOS-Build ist ein Universal-Binary (Apple Silicon + Intel).",
+            tr: "Tauri üzerinden Windows ve macOS masaüstü yapıları — macOS yapısı universal binary (Apple Silicon + Intel).",
           },
           {
             en: "Full UI in English, German and Turkish.",
@@ -96,9 +96,9 @@ export const RELEASES: Release[] = [
             tr: "Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion ile geliştirildi. MIT lisanslı.",
           },
           {
-            en: "macOS and Linux builds are planned for a future release.",
-            de: "macOS- und Linux-Builds sind für eine zukünftige Version geplant.",
-            tr: "macOS ve Linux yapıları gelecek bir sürüm için planlanmaktadır.",
+            en: "The macOS build isn't notarized yet — on first launch, right-click Prowtein → Open to get past Gatekeeper. A Linux build is planned for a future release.",
+            de: "Der macOS-Build ist noch nicht notarisiert — beim ersten Start Rechtsklick auf Prowtein → Öffnen, um an Gatekeeper vorbeizukommen. Ein Linux-Build ist für eine zukünftige Version geplant.",
+            tr: "macOS yapısı henüz noterlenmedi — ilk açılışta Gatekeeper'ı geçmek için Prowtein'a sağ tıkla → Aç. Linux yapısı gelecek bir sürüm için planlanmaktadır.",
           },
         ],
       },

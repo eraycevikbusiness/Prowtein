@@ -9,6 +9,7 @@ import SectionHead from "./ui/SectionHead";
 
 const RELEASES_URL = "https://github.com/eraycevikbusiness/Prowtein/releases";
 const WIN_URL = "https://github.com/eraycevikbusiness/Prowtein/releases/download/v0.1.0/Prowtein_0.1.0_x64-setup.exe";
+const MAC_URL = "https://github.com/eraycevikbusiness/Prowtein/releases/download/v0.1.0/Prowtein_0.1.0_universal.dmg";
 
 function Spotlight({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -84,14 +85,14 @@ export default function Download() {
   const { t } = useLang();
   const router = useRouter();
 
-  const handleWindowsDownload = () => {
+  const startDownload = (url: string, os: "win" | "mac") => {
     const a = document.createElement("a");
-    a.href = WIN_URL;
+    a.href = url;
     a.setAttribute("download", "");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    void router.push("/downloaded");
+    void router.push(`/downloaded?os=${os}`);
   };
 
   return (
@@ -114,14 +115,14 @@ export default function Download() {
               os="Windows"
               file={t.download.winFile}
               btnLabel={t.download.btnWin}
-              onClick={handleWindowsDownload}
+              onClick={() => startDownload(WIN_URL, "win")}
             />
             <DownloadCard
               Icon={Apple}
               os="macOS"
               file={t.download.macFile}
               btnLabel={t.download.btnMac}
-              disabled
+              onClick={() => startDownload(MAC_URL, "mac")}
             />
             <DownloadCard
               Icon={Terminal}

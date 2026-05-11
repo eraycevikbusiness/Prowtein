@@ -14,9 +14,10 @@ First public release.
 - Export the current day to Markdown or CSV (copied to clipboard)
 - Settings — set your daily protein and calorie goals; switch language
 - Local-first storage — a single SQLite file in your OS app-data folder. No account, no cloud, no telemetry
-- Windows desktop build via Tauri
+- Windows and macOS desktop builds via Tauri (the macOS build is a universal binary — Apple Silicon and Intel)
 - Full UI in English, German and Turkish
 
 ### Notes
 - Built with Tauri 2 (Rust) + React + TypeScript, Tailwind CSS, Framer Motion. MIT-licensed.
-- macOS and Linux builds are planned for a future release.
+- The macOS build isn't notarized yet — on first launch, right-click Prowtein → Open to get past Gatekeeper.
+- A Linux build is planned for a future release.

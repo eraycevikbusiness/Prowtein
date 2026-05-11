@@ -1,20 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useLang } from "@/lib/LangContext";
 
 const GITHUB_ISSUES = "https://github.com/eraycevikbusiness/Prowtein/issues";
 
-const steps = (t: ReturnType<typeof useLang>["t"]) => [
-  { n: "1", title: t.downloaded.step1title, body: t.downloaded.step1body },
-  { n: "2", title: t.downloaded.step2title, body: t.downloaded.step2body },
-  { n: "3", title: t.downloaded.step3title, body: t.downloaded.step3body },
-];
-
 export default function DownloadedContent() {
   const { t } = useLang();
+  const params = useSearchParams();
+  const os = params.get("os") === "mac" ? "mac" : "win";
+  const platform = os === "mac" ? t.downloaded.mac : t.downloaded.win;
+
+  const steps = [
+    { n: "1", title: platform.step1title, body: platform.step1body },
+    { n: "2", title: platform.step2title, body: platform.step2body },
+    { n: "3", title: platform.step3title, body: platform.step3body },
+  ];
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] flex flex-col">
@@ -49,7 +53,7 @@ export default function DownloadedContent() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="w-full max-w-lg grid gap-4 mb-14"
         >
-          {steps(t).map((s, i) => (
+          {steps.map((s, i) => (
             <div
               key={i}
               className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-[var(--border)]"

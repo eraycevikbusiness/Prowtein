@@ -55,6 +55,8 @@ library — all works, with local SQLite persistence.
   Framer Motion — the same warm "cream + coral" design system as the website.
 - Data layer: `@tauri-apps/plugin-sql` (SQLite), migrations defined in Rust.
 - Clipboard via `@tauri-apps/plugin-clipboard-manager`.
+- Distributed as a Windows NSIS installer (`.exe`) and a macOS universal `.dmg`
+  (`--target universal-apple-darwin` — Apple Silicon + Intel in one bundle).
 
 ### Known limitations / not yet in 0.1
 
@@ -69,6 +71,9 @@ library — all works, with local SQLite persistence.
   for fully-offline first paint is planned. They fall back to system fonts.
 - App icons are a generated placeholder — run `npm run icons` with your own
   source image before a release build.
+- The macOS `.dmg` is only ad-hoc signed (no Apple Developer ID, not notarized).
+  On first launch, right-click Prowtein in Applications → Open to get past
+  Gatekeeper; Developer-ID signing + notarization are planned.
 
 [Unreleased]: https://github.com/eraycevikbusiness/Prowtein/compare/desktop-v0.1.0...HEAD
 [0.1.0]: https://github.com/eraycevikbusiness/Prowtein/releases/tag/desktop-v0.1.0
