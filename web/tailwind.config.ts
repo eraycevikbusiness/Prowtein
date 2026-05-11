@@ -9,16 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui"],
-        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        sans: ["var(--font-manrope)", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ['var(--font-instrument-serif)', "ui-serif", "Georgia", "serif"],
       },
       colors: {
-        lime: {
-          300: "#bef264",
-          400: "#84CC16",
-          500: "#65a30d",
-          600: "#4d7c0f",
+        cream: "#FAF7F2",
+        coral: {
+          DEFAULT: "#E85D4A",
+          soft: "#FBE2DC",
+          deep: "#C8442F",
         },
+        apricot: "#F5B07B",
+        sage: "#B9C9A7",
+        butter: "#F5DC8E",
+        plum: "#8B6F8F",
       },
     },
   },

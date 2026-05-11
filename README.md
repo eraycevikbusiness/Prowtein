@@ -21,7 +21,7 @@ Prowtein is a fast, local-first desktop app for logging daily nutrition. No acco
 ```
 Prowtein/
 ├── web/          # Marketing website (Next.js 14)
-└── desktop/      # Desktop app (coming soon)
+└── desktop/      # Desktop app (Tauri v2 + React)
 ```
 
 ## Getting started
@@ -37,14 +37,21 @@ npm run build     # production build
 
 ### Desktop app
 
-> Coming soon. Will be built with a modern native framework — see [CONTRIBUTING.md](CONTRIBUTING.md) for the planned stack.
+```bash
+cd desktop
+npm install
+npm run tauri:dev     # launch the app (needs Rust + Tauri prerequisites)
+npm run tauri:build   # produce installers
+```
+
+See [desktop/README.md](desktop/README.md) and [desktop/CHANGELOG.md](desktop/CHANGELOG.md).
 
 ## Tech stack
 
 | Layer | Technology |
 |---|---|
 | Website | Next.js 14, Tailwind CSS, Framer Motion |
-| Desktop | TBD (native, not Electron) |
+| Desktop | Tauri v2 (Rust core), React, TypeScript, Tailwind + shadcn, Framer Motion |
 | Data | SQLite (local only) |
 
 ## Contributing

@@ -33,7 +33,15 @@ Key files:
 
 ### Desktop app (`desktop/`)
 
-Not yet started. Planned as a native app (Tauri is the leading candidate). Watch this repo for updates.
+```bash
+cd desktop
+npm install
+npm run tauri:dev
+```
+
+**Stack:** Tauri v2 (Rust core), React 18, TypeScript, Vite, Tailwind CSS + shadcn-style components, Framer Motion, `@tauri-apps/plugin-sql` (SQLite). Needs the Rust toolchain and the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/).
+
+Record every user-visible change in `desktop/CHANGELOG.md`. See `desktop/README.md` for the layout.
 
 ## Code style
 

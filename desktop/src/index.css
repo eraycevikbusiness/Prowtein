@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Prowtein desktop — warm design system (mirrors the marketing site)
+   ─────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    /* Raw palette (for direct use) */
+    --bg: #faf7f2;
+    --bg-2: #f2ede4;
+    --surface: #ffffff;
+    --surface-2: #fbf8f3;
+    --ink: #1a1814;
+    --ink-2: #4a4540;
+    --ink-3: #8a8580;
+    --ink-4: #b8b2aa;
+    --border-warm: #ece6db;
+    --border-2: #ddd5c7;
+    --coral: #e85d4a;
+    --coral-soft: #fbe2dc;
+    --coral-deep: #c8442f;
+    --apricot: #f5b07b;
+    --sage: #b9c9a7;
+    --butter: #f5dc8e;
+    --plum: #8b6f8f;
+
+    /* shadcn tokens, tuned to the warm palette */
+    --background: 40 38% 96%;
+    --foreground: 40 13% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 40 13% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 40 13% 9%;
+    --primary: 9 78% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 38 33% 92%;
+    --secondary-foreground: 40 13% 9%;
+    --muted: 38 33% 92%;
+    --muted-foreground: 35 6% 42%;
+    --accent: 38 33% 92%;
+    --accent-foreground: 40 13% 9%;
+    --destructive: 9 62% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 38 30% 89%;
+    --input: 38 28% 87%;
+    --ring: 9 78% 60%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01";
+    letter-spacing: -0.005em;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .font-serif {
+    font-family: "Instrument Serif", ui-serif, Georgia, serif;
+    font-feature-settings: "liga", "kern";
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--coral-soft);
+    color: var(--ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #ddd5c7;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c9c0ae;
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* Pill tag — used for eyebrows / small labels */
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-border px-2.5 py-1 text-[11.5px] text-ink-2;
+    letter-spacing: -0.005em;
+  }
+
+  /* Soft keyboard / hint chip (replaces a "technical" kbd) */
+  .chip {
+    @apply inline-flex items-center justify-center rounded-md bg-[var(--bg-2)] text-ink-2 text-[11px] px-1.5 min-w-[22px] h-[22px];
+  }
+
+  .macro-dot {
+    @apply h-2 w-2 rounded-sm shrink-0;
+  }
+
+  /* Subtle dotted background for empty / hero areas */
+  .dot-grid {
+    background-image: radial-gradient(rgba(26, 24, 20, 0.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  .fade-edges {
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+
+  /* A draggable region for the (otherwise frameless-ish) header on macOS */
+  .drag-region {
+    -webkit-app-region: drag;
+  }
+  .no-drag {
+    -webkit-app-region: no-drag;
+  }
+}
+
+/* Keep the cmdk command palette unstyled-ish so our Tailwind takes over */
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+}

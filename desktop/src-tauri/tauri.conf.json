@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Prowtein",
+  "version": "0.1.0",
+  "identifier": "com.eraycevik.prowtein",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Prowtein",
+        "width": 1100,
+        "height": 720,
+        "minWidth": 880,
+        "minHeight": 560,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/icon.png"],
+    "category": "HealthAndFitness",
+    "copyright": "© 2026 Eray Cevik",
+    "shortDescription": "A minimal desktop nutrition tracker.",
+    "longDescription": "Prowtein is a fast, local-first desktop app for logging daily nutrition. No account, no cloud, no telemetry — just a SQLite file on your machine and a clean interface that gets out of your way."
+  },
+  "plugins": {}
+}

@@ -5,16 +5,18 @@ import { motion } from "framer-motion";
 import { ArrowDownToLine, GitBranch, ChevronDown } from "lucide-react";
 import { useLang } from "@/lib/LangContext";
 
-function Sparkles({ count = 55 }: { count?: number }) {
+const GITHUB_URL = "https://github.com/eraycevikbusiness/Prowtein";
+
+function Sparkles({ count = 32 }: { count?: number }) {
   const sparks = useMemo(
     () =>
       Array.from({ length: count }, () => ({
         l: Math.random() * 100,
         t: Math.random() * 100,
-        d: 2 + Math.random() * 5,
-        delay: -Math.random() * 5,
-        size: Math.random() < 0.15 ? 3 : Math.random() < 0.4 ? 2 : 1,
-        color: Math.random() < 0.2 ? "#84CC16" : "#ffffff",
+        d: 4 + Math.random() * 5,
+        delay: -Math.random() * 6,
+        size: Math.random() < 0.18 ? 3 : 2,
+        color: Math.random() < 0.45 ? "rgba(232,93,74,0.55)" : "rgba(26,24,20,0.25)",
       })),
     [count]
   );
@@ -42,31 +44,29 @@ function Sparkles({ count = 55 }: { count?: number }) {
 export default function Hero() {
   const { t } = useLang();
   return (
-    <section id="top" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24 pb-20">
-      <div className="absolute inset-0 dot-grid fade-edges-y opacity-60" aria-hidden="true" />
-      <div className="beams" aria-hidden="true" />
-      <Sparkles count={55} />
-      <div
-        className="absolute left-1/2 -translate-x-1/2 top-1/3 w-[700px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(closest-side, rgba(132,204,22,0.10), transparent 70%)" }}
-        aria-hidden="true"
-      />
+    <section
+      id="top"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24 sm:pt-28 pb-20 px-4"
+    >
+      <div className="absolute inset-0 dot-grid fade-edges-y opacity-50" aria-hidden="true" />
+      <div className="warm-orbs" aria-hidden="true" />
+      <Sparkles count={32} />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-2 sm:px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lime-400/30 bg-lime-400/5 mb-8"
+          className="tag mb-7"
         >
           <span className="relative flex w-1.5 h-1.5">
-            <span className="absolute inset-0 rounded-full bg-lime-400 animate-ping opacity-75" />
-            <span className="relative w-1.5 h-1.5 rounded-full bg-lime-400" />
+            <span className="absolute inset-0 rounded-full bg-[var(--accent)] animate-ping opacity-50" />
+            <span className="relative w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
           </span>
-          <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-lime-300">{t.hero.pill}</span>
+          <span>{t.hero.pill}</span>
         </motion.div>
 
-        <h1 className="text-[clamp(56px,9vw,124px)] leading-[0.95] font-semibold tracking-[-0.04em] text-white">
+        <h1 className="font-serif text-[clamp(40px,10vw,108px)] leading-[1.06] tracking-[-0.02em] text-[var(--ink)]">
           <motion.span
             className="block"
             initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
@@ -76,11 +76,10 @@ export default function Hero() {
             {t.hero.title1}
           </motion.span>
           <motion.span
-            className="block text-lime-400"
             initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.8, delay: 0.55, ease: [0.2, 0.7, 0.3, 1] }}
-            style={{ textShadow: "0 0 60px rgba(132,204,22,0.35)" }}
+            className="block italic text-[var(--accent)]"
           >
             {t.hero.title2}
           </motion.span>
@@ -90,7 +89,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.95 }}
-          className="mt-7 text-zinc-400 text-[17px] md:text-[19px] leading-relaxed max-w-xl mx-auto"
+          className="mt-7 text-[var(--ink-2)] text-[17.5px] md:text-[19.5px] leading-relaxed max-w-xl mx-auto"
           style={{ textWrap: "balance" } as React.CSSProperties}
         >
           {t.hero.sub}
@@ -102,25 +101,23 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 1.1 }}
           className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
-          <div className="moving-border">
-            <a
-              href="#download"
-              className="glow-pulse inline-flex items-center gap-2 h-11 px-5 rounded-[9px] bg-lime-400 text-black text-[14px] font-medium hover:bg-lime-300 active:scale-[0.98] transition-all"
-            >
-              <ArrowDownToLine size={15} />
-              {t.hero.ctaPrimary}
-              <span className="font-mono text-[11px] text-black/60 ml-1">v1.0</span>
-            </a>
-          </div>
           <a
-            href="https://github.com/eraycevikbusiness/Prowtein"
+            href="#download"
+            className="btn-primary inline-flex items-center gap-2 h-12 px-6 rounded-xl text-[15px] font-medium"
+          >
+            <ArrowDownToLine size={16} />
+            {t.hero.ctaPrimary}
+            <span className="text-[12px] text-white/70 ml-1">v1.0</span>
+          </a>
+          <a
+            href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 h-11 px-5 rounded-[9px] border border-[#262626] bg-[#0a0a0a] text-zinc-100 text-[14px] hover:border-[#383838] hover:bg-[#101010] active:scale-[0.98] transition-all"
+            className="btn-ghost inline-flex items-center gap-2 h-12 px-6 rounded-xl text-[15px] font-medium"
           >
-            <GitBranch size={15} />
+            <GitBranch size={16} />
             {t.hero.ctaSecondary}
-            <span className="font-mono text-[11px] text-zinc-500">{t.hero.stars}</span>
+            <span className="text-[12px] text-[var(--ink-3)]">{t.hero.stars}</span>
           </a>
         </motion.div>
 
@@ -128,14 +125,14 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.3 }}
-          className="mt-5 text-[12.5px] text-zinc-600 font-mono"
+          className="mt-5 text-[13px] text-[var(--ink-3)]"
         >
           {t.hero.meta}
         </motion.p>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 scroll-cue flex flex-col items-center gap-1.5 text-zinc-600">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em]">{t.hero.scroll}</span>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-cue flex flex-col items-center gap-1.5 text-[var(--ink-3)]">
+        <span className="text-[11px] tracking-wide">{t.hero.scroll}</span>
         <ChevronDown size={14} />
       </div>
     </section>

@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Manrope, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { LangProvider } from "@/lib/LangContext";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#000000",
+  themeColor: "#FAF7F2",
 };
 
 export default function RootLayout({
@@ -36,10 +39,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans bg-black text-white antialiased`}>
-        <LangProvider>
-          {children}
-        </LangProvider>
+      <body
+        className={`${manrope.variable} ${instrumentSerif.variable} font-sans bg-[#FAF7F2] text-[#1A1814] antialiased`}
+      >
+        <LangProvider>{children}</LangProvider>
       </body>
     </html>
   );

@@ -15,12 +15,16 @@ export default function Showcase() {
   const translateY = useTransform(scrollYProgress, [0, 0.45], [40, 0]);
 
   return (
-    <section ref={ref} className="relative py-32 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-14">
+    <section ref={ref} className="relative py-20 sm:py-32 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 sm:mb-14">
           <SectionHead
             eyebrow={t.showcase.eyebrow}
-            title={<>{t.showcase.titleA} <span className="text-zinc-500">{t.showcase.titleB}</span></>}
+            title={
+              <>
+                {t.showcase.titleA} <span className="italic text-[var(--ink-3)]">{t.showcase.titleB}</span>
+              </>
+            }
             sub={t.showcase.sub}
             align="center"
           />
@@ -33,25 +37,30 @@ export default function Showcase() {
               scale,
               y: translateY,
               transformStyle: "preserve-3d",
-              boxShadow: "0 60px 140px -40px rgba(132,204,22,0.18), 0 30px 80px -30px rgba(0,0,0,0.8)",
             }}
-            className="relative mx-auto w-full max-w-[1080px] rounded-[14px] border border-[#1a1a1a] bg-[#040404] overflow-hidden"
+            className="app-window relative mx-auto w-full max-w-[1080px] overflow-hidden"
           >
-            <div className="h-9 flex items-center px-3.5 gap-1.5 border-b border-[#141414] bg-[#0a0a0a]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#1f1f1f]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#1f1f1f]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#1f1f1f]" />
-              <span className="mx-auto font-mono text-[11px] text-zinc-600">{t.showcase.windowTitle}</span>
+            <div className="h-10 flex items-center px-4 gap-1.5 border-b border-[var(--border)] bg-[var(--surface-2)]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#ED6A5E]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#F5BF4F]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#62C554]" />
+              <span className="mx-auto text-[12px] text-[var(--ink-3)] truncate">{t.showcase.windowTitle}</span>
               <span className="w-14" />
             </div>
-            <div className="h-[560px]">
-              <AppUI />
+            <div className="h-[480px] sm:h-[560px] md:h-[620px] overflow-hidden">
+              <div
+                className="origin-top-left md:origin-center"
+                style={{
+                  width: "1040px",
+                  height: "620px",
+                  transform: "scale(var(--app-scale, 1))",
+                  transformOrigin: "top left",
+                }}
+              >
+                <AppUI />
+              </div>
             </div>
           </motion.div>
-          <div
-            className="mx-auto h-6 w-3/5 -mt-3 rounded-full blur-2xl opacity-60"
-            style={{ background: "radial-gradient(closest-side, rgba(132,204,22,0.4), transparent 70%)" }}
-          />
         </div>
       </div>
     </section>
