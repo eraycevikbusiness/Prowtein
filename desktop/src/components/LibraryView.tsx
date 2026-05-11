@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { useApp } from "@/lib/store";
+import { useT } from "@/lib/i18n";
 import { formatKcal, fuzzyScore, round1 } from "@/lib/format";
 import type { Food } from "@/lib/types";
 import { Button } from "./ui/button";
@@ -10,6 +11,7 @@ import { FoodFormDialog } from "./FoodFormDialog";
 const DOTS = ["#E85D4A", "#F5B07B", "#B9C9A7", "#8B6F8F", "#F5DC8E"];
 
 export function LibraryView() {
+  const { t } = useT();
   const foods = useApp((s) => s.foods);
   const removeFood = useApp((s) => s.removeFood);
   const logFood = useApp((s) => s.logFood);
@@ -46,24 +48,24 @@ export function LibraryView() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search your library…"
+            placeholder={t.library.searchPlaceholder}
             className="pl-9"
           />
         </div>
         <span className="text-[12px] text-ink-3 ml-auto">
-          {list.length} of {foods.length}
+          {list.length} {t.common.of} {foods.length}
         </span>
         <Button size="sm" onClick={openNew}>
-          <Plus size={14} /> New food
+          <Plus size={14} /> {t.library.newFood}
         </Button>
       </div>
 
       {list.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-[var(--border-2)] bg-white/40 dot-grid px-6 py-12 text-center text-ink-3">
-          {foods.length === 0 ? "Your library is empty." : `Nothing matches "${query}".`}
+          {foods.length === 0 ? t.library.empty : `${t.library.noMatch} “${query}”.`}
           <div className="mt-3">
             <Button size="sm" variant="secondary" onClick={openNew}>
-              <Plus size={14} /> Add a food
+              <Plus size={14} /> {t.library.addAFood}
             </Button>
           </div>
         </div>
@@ -79,8 +81,8 @@ export function LibraryView() {
                 <div className="min-w-0 flex-1">
                   <div className="text-[14px] font-medium truncate">{f.name}</div>
                   <div className="text-[11.5px] text-ink-3 mt-0.5">
-                    per {f.serving}
-                    {f.uses > 0 ? ` · logged ${f.uses}×` : ""}
+                    {f.serving}
+                    {f.uses > 0 ? ` · ${f.uses}× ${t.library.usageLabel}` : ""}
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -89,7 +91,7 @@ export function LibraryView() {
                     size="icon-sm"
                     className="text-ink-3 hover:text-foreground"
                     onClick={() => openEdit(f)}
-                    aria-label="Edit food"
+                    aria-label={t.library.editFood}
                   >
                     <Pencil size={13} />
                   </Button>
@@ -98,7 +100,7 @@ export function LibraryView() {
                     size="icon-sm"
                     className="text-ink-3 hover:text-destructive hover:bg-coral-soft"
                     onClick={() => setConfirmId(confirmId === f.id ? null : f.id)}
-                    aria-label="Delete food"
+                    aria-label={t.library.deleteFood}
                   >
                     <Trash2 size={13} />
                   </Button>
@@ -107,7 +109,9 @@ export function LibraryView() {
 
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center gap-3 text-[12px] text-ink-2">
-                  <span className="text-coral-deep font-medium">{formatKcal(f.kcal)} kcal</span>
+                  <span className="text-coral-deep font-medium">
+                    {formatKcal(f.kcal)} {t.units.kcal}
+                  </span>
                   <span>P {round1(f.protein)}</span>
                   <span>C {round1(f.carbs)}</span>
                   <span>F {round1(f.fat)}</span>
@@ -121,16 +125,16 @@ export function LibraryView() {
                     setView("today");
                   }}
                 >
-                  <Plus size={13} /> Log
+                  <Plus size={13} /> {t.library.log}
                 </Button>
               </div>
 
               {confirmId === f.id && (
                 <div className="mt-3 rounded-lg bg-coral-soft px-3 py-2 flex items-center justify-between gap-2 text-[12.5px]">
-                  <span className="text-coral-deep">Delete this food? Its logged entries go too.</span>
+                  <span className="text-coral-deep">{t.library.deleteConfirm}</span>
                   <span className="flex gap-1.5 shrink-0">
                     <Button size="sm" variant="ghost" className="h-7 px-2" onClick={() => setConfirmId(null)}>
-                      Cancel
+                      {t.common.cancel}
                     </Button>
                     <Button
                       size="sm"
@@ -141,7 +145,7 @@ export function LibraryView() {
                         setConfirmId(null);
                       }}
                     >
-                      Delete
+                      {t.common.delete}
                     </Button>
                   </span>
                 </div>

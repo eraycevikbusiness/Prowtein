@@ -2,15 +2,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Apple, Coffee, Drumstick, Fish, Trash2 } from "lucide-react";
 import { useApp } from "@/lib/store";
-import {
-  entryTotals,
-  formatKcal,
-  MEAL_KIND_LABEL,
-  mealKindFromTime,
-  round1,
-  timeFromTimestamp,
-  trimNum,
-} from "@/lib/format";
+import { useT } from "@/lib/i18n";
+import { entryTotals, formatKcal, mealKindFromTime, round1, timeFromTimestamp, trimNum } from "@/lib/format";
 import type { Entry, MealKind } from "@/lib/types";
 import { Button } from "./ui/button";
 import {
@@ -32,6 +25,7 @@ const KIND_ICON: Record<MealKind, typeof Coffee> = {
 };
 
 export function MealRow({ entry }: { entry: Entry }) {
+  const { t } = useT();
   const changeServings = useApp((s) => s.changeServings);
   const removeEntry = useApp((s) => s.removeEntry);
   const [editOpen, setEditOpen] = useState(false);
@@ -43,7 +37,7 @@ export function MealRow({ entry }: { entry: Entry }) {
 
   const kind = mealKindFromTime(entry.logged_at);
   const Icon = KIND_ICON[kind];
-  const t = entryTotals(entry);
+  const tot = entryTotals(entry);
 
   const n = Math.max(0.05, Number(servings) || 0);
   const preview = { kcal: entry.kcal * n, p: entry.protein * n, c: entry.carbs * n, f: entry.fat * n };
@@ -69,7 +63,7 @@ export function MealRow({ entry }: { entry: Entry }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span className="text-[14px] font-medium truncate">{entry.name}</span>
-            <span className="text-[10.5px] uppercase tracking-wide text-ink-3 shrink-0">{MEAL_KIND_LABEL[kind]}</span>
+            <span className="text-[10.5px] uppercase tracking-wide text-ink-3 shrink-0">{t.mealKinds[kind]}</span>
           </div>
           <div className="text-[12px] text-ink-3 truncate">
             {trimNum(entry.servings)} × {entry.serving} · {timeFromTimestamp(entry.logged_at)}
@@ -77,9 +71,12 @@ export function MealRow({ entry }: { entry: Entry }) {
         </div>
         <div className="text-right whitespace-nowrap">
           <div className="text-[14px] font-medium">
-            {formatKcal(t.kcal)} <span className="text-ink-3 font-normal text-[12px]">kcal</span>
+            {formatKcal(tot.kcal)} <span className="text-ink-3 font-normal text-[12px]">{t.units.kcal}</span>
           </div>
-          <div className="text-[12px] text-coral">{round1(t.protein)}g protein</div>
+          <div className="text-[12px] text-coral">
+            {round1(tot.protein)}
+            {t.mealRow.proteinSuffix}
+          </div>
         </div>
         <Button
           variant="ghost"
@@ -89,7 +86,7 @@ export function MealRow({ entry }: { entry: Entry }) {
             ev.stopPropagation();
             void removeEntry(entry.id);
           }}
-          aria-label="Remove entry"
+          aria-label={t.mealRow.removeEntry}
         >
           <Trash2 size={14} />
         </Button>
@@ -100,15 +97,15 @@ export function MealRow({ entry }: { entry: Entry }) {
           <DialogHeader>
             <DialogTitle>{entry.name}</DialogTitle>
             <DialogDescription>
-              Per {entry.serving}: {formatKcal(entry.kcal)} kcal · {round1(entry.protein)}g P · {round1(entry.carbs)}g C ·{" "}
-              {round1(entry.fat)}g F
+              {entry.serving} · {formatKcal(entry.kcal)} {t.units.kcal} · P {round1(entry.protein)} · C{" "}
+              {round1(entry.carbs)} · F {round1(entry.fat)}
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={save} className="grid gap-4">
             <div className="grid gap-1.5">
-              <Label htmlFor="servings">Servings</Label>
+              <Label htmlFor="servings">{t.mealRow.servings}</Label>
               <div className="flex items-center gap-2">
-                <Button type="button" variant="secondary" size="icon" onClick={() => bump(-0.5)} aria-label="Less">
+                <Button type="button" variant="secondary" size="icon" onClick={() => bump(-0.5)} aria-label={t.mealRow.less}>
                   −
                 </Button>
                 <div className="relative flex-1">
@@ -125,15 +122,17 @@ export function MealRow({ entry }: { entry: Entry }) {
                     × {entry.serving}
                   </span>
                 </div>
-                <Button type="button" variant="secondary" size="icon" onClick={() => bump(0.5)} aria-label="More">
+                <Button type="button" variant="secondary" size="icon" onClick={() => bump(0.5)} aria-label={t.mealRow.more}>
                   +
                 </Button>
               </div>
             </div>
             <div className="rounded-xl bg-[var(--bg-2)] px-4 py-3 flex items-center justify-between text-[13px]">
-              <span className="font-medium">{formatKcal(preview.kcal)} kcal</span>
+              <span className="font-medium">
+                {formatKcal(preview.kcal)} {t.units.kcal}
+              </span>
               <span className="text-ink-2">
-                {round1(preview.p)}g P · {round1(preview.c)}g C · {round1(preview.f)}g F
+                P {round1(preview.p)} · C {round1(preview.c)} · F {round1(preview.f)}
               </span>
             </div>
             <DialogFooter className="sm:justify-between">
@@ -146,13 +145,13 @@ export function MealRow({ entry }: { entry: Entry }) {
                   setEditOpen(false);
                 }}
               >
-                <Trash2 size={14} /> Remove
+                <Trash2 size={14} /> {t.common.remove}
               </Button>
               <div className="flex gap-2">
                 <Button type="button" variant="ghost" onClick={() => setEditOpen(false)}>
-                  Cancel
+                  {t.common.cancel}
                 </Button>
-                <Button type="submit">Save</Button>
+                <Button type="submit">{t.common.save}</Button>
               </div>
             </DialogFooter>
           </form>

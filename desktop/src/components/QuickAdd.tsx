@@ -3,6 +3,7 @@ import { Command } from "cmdk";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Plus, Search } from "lucide-react";
 import { useApp } from "@/lib/store";
+import { useT } from "@/lib/i18n";
 import { formatKcal, fuzzyScore, round1 } from "@/lib/format";
 import type { Food } from "@/lib/types";
 import { FoodFormDialog } from "./FoodFormDialog";
@@ -13,6 +14,7 @@ const CONTENT =
   "fixed left-1/2 top-[16%] z-50 w-[calc(100%-2rem)] max-w-[560px] -translate-x-1/2 rounded-2xl border border-border bg-card shadow-[0_30px_80px_-20px_rgba(26,24,20,0.4)] overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95";
 
 export function QuickAdd() {
+  const { t } = useT();
   const open = useApp((s) => s.commandOpen);
   const setCommandOpen = useApp((s) => s.setCommandOpen);
   const foods = useApp((s) => s.foods);
@@ -55,10 +57,8 @@ export function QuickAdd() {
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className={OVERLAY} />
           <DialogPrimitive.Content className={CONTENT} onOpenAutoFocus={(e) => e.preventDefault()}>
-            <DialogPrimitive.Title className="sr-only">Quick add a food</DialogPrimitive.Title>
-            <DialogPrimitive.Description className="sr-only">
-              Search your food library and log a meal to the selected day.
-            </DialogPrimitive.Description>
+            <DialogPrimitive.Title className="sr-only">{t.quickAdd.title}</DialogPrimitive.Title>
+            <DialogPrimitive.Description className="sr-only">{t.quickAdd.desc}</DialogPrimitive.Description>
             <Command shouldFilter={false} loop className="w-full">
               <div className="flex items-center gap-2.5 px-4 h-12 border-b border-border">
                 <Search size={15} className="text-ink-3 shrink-0" />
@@ -66,7 +66,7 @@ export function QuickAdd() {
                   value={query}
                   onValueChange={setQuery}
                   autoFocus
-                  placeholder="Search foods…  (then ↵ to log)"
+                  placeholder={t.quickAdd.placeholder}
                   className="flex-1 bg-transparent text-[14.5px] text-foreground placeholder:text-ink-4 outline-none"
                 />
                 <span className="chip">esc</span>
@@ -74,9 +74,7 @@ export function QuickAdd() {
 
               <Command.List className="max-h-[340px] overflow-y-auto p-1.5">
                 {results.length === 0 && !trimmed && (
-                  <div className="px-3 py-6 text-center text-[13px] text-ink-3">
-                    Your library is empty — create your first food below.
-                  </div>
+                  <div className="px-3 py-6 text-center text-[13px] text-ink-3">{t.quickAdd.emptyLibrary}</div>
                 )}
                 {results.map((f) => (
                   <Command.Item
@@ -88,7 +86,7 @@ export function QuickAdd() {
                     <span className="w-1.5 h-1.5 rounded-full bg-coral shrink-0" />
                     <span className="text-[13.5px] text-foreground truncate flex-1">{f.name}</span>
                     <span className="text-[11.5px] text-ink-3 shrink-0">
-                      {round1(f.protein)}g P · {formatKcal(f.kcal)} kcal · {f.serving}
+                      {round1(f.protein)}g P · {formatKcal(f.kcal)} {t.units.kcal} · {f.serving}
                     </span>
                   </Command.Item>
                 ))}
@@ -100,7 +98,9 @@ export function QuickAdd() {
                   >
                     <Plus size={14} className="text-ink-3 shrink-0" />
                     <span className="text-[13.5px] text-ink-2">
-                      Create <span className="font-medium text-foreground">&ldquo;{trimmed}&rdquo;</span> as a new food
+                      {t.quickAdd.createPre && <>{t.quickAdd.createPre} </>}
+                      <span className="font-medium text-foreground">&ldquo;{trimmed}&rdquo;</span>
+                      {t.quickAdd.createPost && <> {t.quickAdd.createPost}</>}
                     </span>
                   </Command.Item>
                 )}
@@ -108,13 +108,13 @@ export function QuickAdd() {
 
               <div className="flex items-center gap-3 px-4 py-2 border-t border-border text-[11px] text-ink-3 bg-[var(--surface-2)]">
                 <span className="inline-flex items-center gap-1">
-                  <span className="chip">↵</span> log
+                  <span className="chip">↵</span> {t.quickAdd.logHint}
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <span className="chip">↑↓</span> navigate
+                  <span className="chip">↑↓</span> {t.quickAdd.navigateHint}
                 </span>
                 <span className="ml-auto">
-                  {results.length} {results.length === 1 ? "match" : "matches"}
+                  {results.length} {results.length === 1 ? t.common.match : t.common.matches}
                 </span>
               </div>
             </Command>

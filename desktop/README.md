@@ -9,6 +9,7 @@ A minimal, **local-first** desktop nutrition tracker. Built with **Tauri v2**
 - A food library you register once and log forever
 - Protein ring, weekly chart, streak counter
 - Export a day to Markdown / CSV (clipboard)
+- English / Deutsch / Türkçe — switch in Settings
 - All data in one local SQLite file — no account, no cloud, no telemetry
 
 See [`CHANGELOG.md`](./CHANGELOG.md) for the version history. Current: **v0.1.0**.

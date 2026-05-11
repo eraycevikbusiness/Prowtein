@@ -25,25 +25,16 @@ export function addDays(iso: string, n: number): string {
   return toISODate(d);
 }
 
-/** "Today" / "Yesterday" / "Tomorrow" / "Mon, May 11" */
-export function relativeDayLabel(iso: string): string {
-  const today = todayISO();
-  if (iso === today) return "Today";
-  if (iso === addDays(today, -1)) return "Yesterday";
-  if (iso === addDays(today, 1)) return "Tomorrow";
-  return formatDateLong(iso);
-}
-
-export function formatDateLong(iso: string): string {
-  return fromISODate(iso).toLocaleDateString(undefined, {
+export function formatDateLong(iso: string, locale?: string): string {
+  return fromISODate(iso).toLocaleDateString(locale, {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
 }
 
-export function formatDateFull(iso: string): string {
-  return fromISODate(iso).toLocaleDateString(undefined, {
+export function formatDateFull(iso: string, locale?: string): string {
+  return fromISODate(iso).toLocaleDateString(locale, {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -52,8 +43,8 @@ export function formatDateFull(iso: string): string {
 }
 
 /** Single-letter weekday for the mini week chart (locale "narrow"). */
-export function dayLetter(iso: string): string {
-  return fromISODate(iso).toLocaleDateString(undefined, { weekday: "narrow" });
+export function dayLetter(iso: string, locale?: string): string {
+  return fromISODate(iso).toLocaleDateString(locale, { weekday: "narrow" });
 }
 
 /** The Monday-anchored 7-day window that contains `iso`. */
@@ -74,13 +65,6 @@ export function mealKindFromTime(loggedAt: string): MealKind {
   if (hour < 18) return "snack";
   return "dinner";
 }
-
-export const MEAL_KIND_LABEL: Record<MealKind, string> = {
-  breakfast: "Breakfast",
-  lunch: "Lunch",
-  snack: "Snack",
-  dinner: "Dinner",
-};
 
 export function localTimestamp(d = new Date()): string {
   const p = (n: number) => String(n).padStart(2, "0");

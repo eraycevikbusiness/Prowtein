@@ -1,17 +1,14 @@
 import { useMemo, useState } from "react";
 import { Bookmark, Flame, Settings, Sun } from "lucide-react";
 import { useApp } from "@/lib/store";
+import { useT } from "@/lib/i18n";
 import { dayLetter, entryTotals, todayISO, weekDays } from "@/lib/format";
 import type { View } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { SettingsDialog } from "./SettingsDialog";
 
-const NAV: { key: View; label: string; Icon: typeof Sun }[] = [
-  { key: "today", label: "Today", Icon: Sun },
-  { key: "library", label: "Library", Icon: Bookmark },
-];
-
 export function Sidebar() {
+  const { t, locale } = useT();
   const view = useApp((s) => s.view);
   const setView = useApp((s) => s.setView);
   const streak = useApp((s) => s.streak);
@@ -20,22 +17,26 @@ export function Sidebar() {
   const goToToday = useApp((s) => s.goToToday);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  const nav: { key: View; label: string; Icon: typeof Sun }[] = [
+    { key: "today", label: t.nav.today, Icon: Sun },
+    { key: "library", label: t.nav.library, Icon: Bookmark },
+  ];
+
   const week = useMemo(() => {
     const days = weekDays(todayISO());
     const byDay = new Map<string, number>();
     for (const e of recentEntries) {
-      const t = entryTotals(e);
-      byDay.set(e.date, (byDay.get(e.date) ?? 0) + t.protein);
+      byDay.set(e.date, (byDay.get(e.date) ?? 0) + entryTotals(e).protein);
     }
     const today = todayISO();
     return days.map((d) => ({
       date: d,
-      letter: dayLetter(d),
+      letter: dayLetter(d, locale),
       frac: goals.protein > 0 ? Math.min(1, (byDay.get(d) ?? 0) / goals.protein) : 0,
       today: d === today,
       future: d > today,
     }));
-  }, [recentEntries, goals.protein]);
+  }, [recentEntries, goals.protein, locale]);
 
   return (
     <aside className="w-[212px] shrink-0 border-r border-border bg-card flex flex-col">
@@ -51,12 +52,12 @@ export function Sidebar() {
         </div>
         <div className="leading-tight">
           <div className="text-[13px] font-semibold tracking-tight">Prowtein</div>
-          <div className="text-[11px] text-ink-3">Local</div>
+          <div className="text-[11px] text-ink-3">{t.sidebar.local}</div>
         </div>
       </button>
 
       <nav className="px-3 py-2 flex flex-col gap-0.5 text-[13.5px]">
-        {NAV.map(({ key, label, Icon }) => {
+        {nav.map(({ key, label, Icon }) => {
           const active = view === key;
           return (
             <button
@@ -79,10 +80,11 @@ export function Sidebar() {
         <div className="flex items-center justify-between mb-2.5">
           <span className="inline-flex items-center gap-1.5 text-[11.5px] text-ink-3">
             <Flame size={12} className={streak > 0 ? "text-coral" : ""} />
-            Streak
+            {t.sidebar.streak}
           </span>
           <span className="font-serif text-[18px] leading-none text-foreground">
-            {streak} <span className="text-[11px] text-ink-3 font-sans">{streak === 1 ? "day" : "days"}</span>
+            {streak}{" "}
+            <span className="text-[11px] text-ink-3 font-sans">{streak === 1 ? t.sidebar.day : t.sidebar.days}</span>
           </span>
         </div>
         <div className="flex items-end justify-between gap-1">
@@ -96,7 +98,10 @@ export function Sidebar() {
               className="flex flex-col items-center gap-1.5 flex-1 group"
               title={w.date}
             >
-              <div className="w-full rounded-full overflow-hidden bg-white group-hover:ring-2 group-hover:ring-coral-soft" style={{ height: 36 }}>
+              <div
+                className="w-full rounded-full overflow-hidden bg-white group-hover:ring-2 group-hover:ring-coral-soft"
+                style={{ height: 36 }}
+              >
                 <div
                   className="w-full rounded-full"
                   style={{
@@ -119,7 +124,7 @@ export function Sidebar() {
           className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-ink-2 hover:bg-[var(--surface-2)] hover:text-foreground transition-colors text-[13.5px]"
         >
           <Settings size={15} />
-          <span>Settings</span>
+          <span>{t.nav.settings}</span>
         </button>
       </div>
 

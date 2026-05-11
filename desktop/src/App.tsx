@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useApp } from "@/lib/store";
+import { useT } from "@/lib/i18n";
 import { Sidebar } from "@/components/Sidebar";
 import { TopBar } from "@/components/TopBar";
 import { TodayView } from "@/components/TodayView";
@@ -8,6 +9,7 @@ import { LibraryView } from "@/components/LibraryView";
 import { QuickAdd } from "@/components/QuickAdd";
 
 export default function App() {
+  const { t } = useT();
   const ready = useApp((s) => s.ready);
   const loadError = useApp((s) => s.loadError);
   const view = useApp((s) => s.view);
@@ -35,7 +37,7 @@ export default function App() {
       <div className="h-full flex items-center justify-center bg-background">
         <div className="flex items-center gap-2 text-ink-3 text-sm">
           <span className="w-2 h-2 rounded-full bg-coral animate-pulse" />
-          Loading your kitchen…
+          {t.loading}
         </div>
       </div>
     );
@@ -44,7 +46,7 @@ export default function App() {
   if (loadError) {
     return (
       <div className="h-full flex flex-col items-center justify-center gap-2 bg-background px-8 text-center">
-        <div className="font-serif text-2xl text-foreground">Couldn&apos;t open your data</div>
+        <div className="font-serif text-2xl text-foreground">{t.loadErrorTitle}</div>
         <div className="text-ink-3 text-[13.5px] max-w-md leading-relaxed">{loadError}</div>
       </div>
     );

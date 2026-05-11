@@ -36,6 +36,8 @@ library — all works, with local SQLite persistence.
   ±0.5 stepper and a live macro preview) or remove it.
 - **Daily goals** — set your protein and calorie targets in Settings; the ring
   and the week chart fill against the protein goal.
+- **Localization** — full UI in English, German and Turkish; pick a language in
+  Settings, the choice persists, and dates follow the chosen locale.
 - **Streak + week chart** — consecutive days with ≥1 entry, plus a 7-day
   protein mini-chart in the sidebar.
 - **Export** — copy the selected day's log to the clipboard as **Markdown**
@@ -56,7 +58,8 @@ library — all works, with local SQLite persistence.
 
 ### Known limitations / not yet in 0.1
 
-- English UI only (the website is EN/DE/TR — app localization is planned).
+- Export documents (Markdown / CSV) are written in English; only the date
+  heading follows your locale.
 - No dark mode.
 - Export is clipboard-only (save-to-file `.md` / `.csv` and PDF are planned).
 - No calendar grid or standalone stats page (the week chart covers the basics).

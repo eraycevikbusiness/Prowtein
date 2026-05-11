@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApp } from "@/lib/store";
+import { useT } from "@/lib/i18n";
 import type { Food, FoodInput } from "@/lib/types";
 import { Button } from "./ui/button";
 import {
@@ -28,6 +29,7 @@ function isFood(f: Props["food"]): f is Food {
 }
 
 export function FoodFormDialog({ open, onOpenChange, food, onSaved }: Props) {
+  const { t } = useT();
   const addFood = useApp((s) => s.addFood);
   const editFood = useApp((s) => s.editFood);
   const [form, setForm] = useState(BLANK);
@@ -58,7 +60,7 @@ export function FoodFormDialog({ open, onOpenChange, food, onSaved }: Props) {
     e.preventDefault();
     const name = form.name.trim();
     if (!name) {
-      setError("Give it a name.");
+      setError(t.foodForm.nameRequired);
       return;
     }
     const num = (v: string) => {
@@ -87,30 +89,30 @@ export function FoodFormDialog({ open, onOpenChange, food, onSaved }: Props) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{editing ? "Edit food" : "New food"}</DialogTitle>
-          <DialogDescription>Macros are per one serving. Once it's here, logging it is two keystrokes.</DialogDescription>
+          <DialogTitle>{editing ? t.foodForm.editFood : t.foodForm.newFood}</DialogTitle>
+          <DialogDescription>{t.foodForm.desc}</DialogDescription>
         </DialogHeader>
         <form onSubmit={submit} className="grid gap-4">
           <div className="grid gap-1.5">
-            <Label htmlFor="f-name">Name</Label>
-            <Input id="f-name" value={form.name} onChange={set("name")} placeholder="Greek yogurt, plain" autoFocus />
+            <Label htmlFor="f-name">{t.foodForm.name}</Label>
+            <Input id="f-name" value={form.name} onChange={set("name")} placeholder={t.foodForm.namePlaceholder} autoFocus />
           </div>
           <div className="grid gap-1.5">
-            <Label htmlFor="f-serving">Serving</Label>
+            <Label htmlFor="f-serving">{t.foodForm.serving}</Label>
             <Input id="f-serving" value={form.serving} onChange={set("serving")} placeholder="100 g" />
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <NumField id="f-kcal" label="Calories" unit="kcal" value={form.kcal} onChange={set("kcal")} />
-            <NumField id="f-protein" label="Protein" unit="g" value={form.protein} onChange={set("protein")} />
-            <NumField id="f-carbs" label="Carbs" unit="g" value={form.carbs} onChange={set("carbs")} />
-            <NumField id="f-fat" label="Fat" unit="g" value={form.fat} onChange={set("fat")} />
+            <NumField id="f-kcal" label={t.macros.calories} unit={t.units.kcal} value={form.kcal} onChange={set("kcal")} />
+            <NumField id="f-protein" label={t.macros.protein} unit={t.units.g} value={form.protein} onChange={set("protein")} />
+            <NumField id="f-carbs" label={t.macros.carbs} unit={t.units.g} value={form.carbs} onChange={set("carbs")} />
+            <NumField id="f-fat" label={t.macros.fat} unit={t.units.g} value={form.fat} onChange={set("fat")} />
           </div>
           {error && <p className="text-[12.5px] text-destructive">{error}</p>}
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
+              {t.common.cancel}
             </Button>
-            <Button type="submit">{editing ? "Save changes" : "Add food"}</Button>
+            <Button type="submit">{editing ? t.foodForm.saveChanges : t.foodForm.addFood}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
